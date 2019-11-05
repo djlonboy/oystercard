@@ -23,7 +23,7 @@ describe Oystercard do
 
   it "can change journey status when touching in" do
     subject.balance = Oystercard::MIN_BALANCE
-    subject.touch_in
+    subject.touch_in("station")
     expect(subject.journey_status).to eq true
   end
 
@@ -40,7 +40,7 @@ describe Oystercard do
 
    it "will not let user touch in with balance below minimum" do
      subject.balance = Oystercard::MIN_BALANCE - 0.01
-     expect { subject.touch_in }.to raise_error("Insufficient funds")
+     expect { subject.touch_in("station") }.to raise_error("Insufficient funds")
    end
 
    it "will reduce balance by minimum fare when touching out" do
@@ -50,10 +50,11 @@ describe Oystercard do
    end
 
    it "will store the station name on touch in" do
+     subject.balance = Oystercard::MIN_BALANCE
      subject.touch_in("station")
      expect(subject.entry_station).to eq("station")
    end
-   
+
    # Don't need to test private methods
      # it "will deduct the cost of my fare" do
      #   subject.top_up(10)
