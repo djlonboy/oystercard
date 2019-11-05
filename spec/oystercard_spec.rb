@@ -22,4 +22,8 @@ describe Oystercard do
     subject.deduct(5)
     expect(subject.balance).to eq(5)
   end
+
+  it "should have a default in journey status of false" do
+    expect(subject.journey_status).to eq false
+  end
 end
