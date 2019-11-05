@@ -33,7 +33,7 @@ describe Oystercard do
   end
 
   it "can change journey status when touching out" do
-    subject.touch_in
+    subject.journey_status = true
     subject.touch_out
     expect(subject.journey_status).to eq false
   end
@@ -42,6 +42,11 @@ describe Oystercard do
      oystercard = Oystercard.new
      oystercard.journey_status = true
      expect(oystercard.in_journey?).to eq true
+   end
+
+   it "will not let user touch in with balance below minimum" do
+     subject.balance = (Oystercard::MINIMUM_BALANCE - 0.01)
+     expect { subject.touch_in }.to raise_error "Insufficient funds"
    end
 
 end
