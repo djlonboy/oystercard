@@ -10,6 +10,10 @@ class Oystercard
     @journey_status = false
   end
 
+  def touch_in
+    @journey_status = true
+  end
+
   def top_up(money)
     raise "max balance £#{MAX_BALANCE} exceeded" if check_if_maxed?(money)
     @balance += money

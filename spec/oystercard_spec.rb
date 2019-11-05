@@ -31,4 +31,10 @@ describe Oystercard do
     subject.touch_in
     expect(subject.journey_status).to eq true
   end
+
+  it "can change journey status when touching out" do
+    subject.touch_in
+    subject.touch_out
+    expect(subject.journey_status).to eq false
+  end
 end
