@@ -49,6 +49,11 @@ describe Oystercard do
      expect { subject.touch_out }.to change { subject.balance }.by(-Oystercard::MIN_BALANCE)
    end
 
+   it "will store the station name on touch in" do
+     subject.touch_in("station")
+     expect(subject.entry_station).to eq("station")
+   end
+   
    # Don't need to test private methods
      # it "will deduct the cost of my fare" do
      #   subject.top_up(10)
