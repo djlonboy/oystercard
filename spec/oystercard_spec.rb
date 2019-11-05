@@ -26,4 +26,9 @@ describe Oystercard do
   it "should have a default in journey status of false" do
     expect(subject.journey_status).to eq false
   end
+
+  it "can change journey status when touching in" do
+    subject.touch_in
+    expect(subject.journey_status).to eq true
+  end
 end
