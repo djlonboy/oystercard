@@ -17,12 +17,6 @@ describe Oystercard do
     expect { subject.top_up(max_balance + 0.01) }.to raise_error("max balance £#{max_balance} exceeded")
   end
 
-  it "will deduct the cost of my fare" do
-    subject.top_up(10)
-    subject.deduct(5)
-    expect(subject.balance).to eq(5)
-  end
-
   it "should have a default in journey status of false" do
     expect(subject.journey_status).to eq false
   end
@@ -52,7 +46,14 @@ describe Oystercard do
    it "will reduce balance by minimum fare when touching out" do
      subject.balance = Oystercard::MIN_BALANCE
      subject.journey_status = true
-     expect { subject.touch_out }.to change { subject.balance }.by(Oystercard::MIN_BALANCE)
+     expect { subject.touch_out }.to change { subject.balance }.by(-Oystercard::MIN_BALANCE)
    end
+
+   # Don't need to test private methods
+     # it "will deduct the cost of my fare" do
+     #   subject.top_up(10)
+     #   subject.deduct(5)
+     #   expect(subject.balance).to eq(5)
+     # end
 
 end
