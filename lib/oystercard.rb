@@ -13,10 +13,15 @@ class Oystercard
     @balance += money
   end
 
-private
+  def deduct(money)
+    @balance -= money
+  end
 
-def check_if_maxed?(amount)
-  @balance + amount > MAX_BALANCE
-end
 
-end
+  private
+
+  def check_if_maxed?(amount)
+    @balance + amount > MAX_BALANCE
+  end
+
+  end
