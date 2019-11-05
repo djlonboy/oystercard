@@ -37,4 +37,11 @@ describe Oystercard do
     subject.touch_out
     expect(subject.journey_status).to eq false
   end
+
+   it "returns the correct journey status" do
+     oystercard = Oystercard.new
+     oystercard.journey_status = true
+     expect(oystercard.in_journey?).to eq true
+   end
+
 end
