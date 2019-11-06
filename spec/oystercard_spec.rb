@@ -14,7 +14,7 @@ describe Oystercard do
     end
 
     it "should have a default in journey status of false" do
-      expect(subject.journey_status).to eq false
+      expect(subject.in_journey?).to eq false
     end
 
   end
@@ -38,7 +38,7 @@ describe Oystercard do
     it "can change journey status" do
       subject.balance = Oystercard::MIN_BALANCE
       subject.touch_in(station)
-      expect(subject.journey_status).to eq true
+      expect(subject.in_journey?).to eq true
     end
 
     it "will not let user touch in with balance below minimum" do
@@ -57,14 +57,14 @@ describe Oystercard do
   describe "when touching out" do
 
     it "can change journey status" do
-      subject.journey_status = true
+      subject.entry_station = station
       subject.touch_out
-      expect(subject.journey_status).to eq false
+      expect(subject.in_journey?).to eq false
     end
 
     it "will reduce balance by minimum fare" do
       subject.balance = Oystercard::MIN_BALANCE
-      subject.journey_status = true
+      subject.entry_station = station
       expect { subject.touch_out }.to change { subject.balance }.by(-Oystercard::MIN_BALANCE)
     end
 
@@ -79,7 +79,7 @@ describe Oystercard do
   describe "during journey" do
 
     it "returns the correct journey status" do
-      subject.journey_status = true
+      subject.entry_station = station
       expect(subject.in_journey?).to eq true
     end
 
