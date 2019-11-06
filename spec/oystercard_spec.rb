@@ -100,6 +100,14 @@ describe Oystercard do
       subject.touch_out(station)
       expect(subject.last_journey).to eq({ entry: station, exit: station })
     end
+
+    it "should store the last journey in the list of all journeys" do
+      subject.balance = Oystercard::MIN_BALANCE
+      subject.touch_in(station)
+      subject.touch_out(station)
+      expect(subject.journeys).to include({ entry: station, exit: station })
+    end
+
   end
 end
 
