@@ -17,6 +17,14 @@ describe Oystercard do
       expect(subject.in_journey?).to eq false
     end
 
+    it "should have an empty journey list" do
+      expect(subject.journeys).to eq []
+    end
+
+    it "should have an empty last_journey hash" do
+      expect(subject.last_journey).to eq({ entry: nil, exit: nil })
+    end
+
   end
 
   describe "when topping up" do
@@ -58,19 +66,19 @@ describe Oystercard do
 
     it "can change journey status" do
       subject.entry_station = station
-      subject.touch_out
+      subject.touch_out(station)
       expect(subject.in_journey?).to eq false
     end
 
     it "will reduce balance by minimum fare" do
       subject.balance = Oystercard::MIN_BALANCE
       subject.entry_station = station
-      expect { subject.touch_out }.to change { subject.balance }.by(-Oystercard::MIN_BALANCE)
+      expect { subject.touch_out(station) }.to change { subject.balance }.by(-Oystercard::MIN_BALANCE)
     end
 
     it "will forget the entry station" do
       subject.entry_station = station
-      subject.touch_out
+      subject.touch_out(station)
       expect(subject.entry_station).to eq nil
     end
 
@@ -88,6 +96,16 @@ describe Oystercard do
       expect(subject.in_journey?).to eq true
     end
 
+  end
+
+  describe "after journey" do
+
+    it "stores the entry and ext station in current_journey" do
+      subject.balance = Oystercard::MIN_BALANCE
+      subject.touch_in(station)
+      subject.touch_out(station)
+      expect(subject.last_journey).to eq({ entry: station, exit: station })
+    end
   end
 end
 
