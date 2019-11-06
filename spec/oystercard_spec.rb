@@ -74,6 +74,11 @@ describe Oystercard do
       expect(subject.entry_station).to eq nil
     end
 
+    it "will store the exit station" do
+      subject.touch_out(station)
+      expect(subject.exit_station).to eq station
+    end
+
   end
 
   describe "during journey" do
