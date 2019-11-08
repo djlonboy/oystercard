@@ -23,11 +23,7 @@ class Oystercard
   end
 
   def in_journey?
-    if last_journey[:entry] != nil && last_journey[:exit] == nil
-      true
-    else
-      false
-    end
+    last_journey[:entry] != nil && last_journey[:exit] == nil
   end
 
   def top_up(money)
